@@ -1,0 +1,4 @@
+[service]
+name = "Echo"
+env = "local"
+description = "測試服務"
