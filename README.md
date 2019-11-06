@@ -13,5 +13,5 @@ RPC Server
 需輸入 ENV & SERVICE 以對應設定檔啟動服務
 
 ```
-SERVICE=Login ENV=local go run main.go
+SERVICE=Echo ENV=local go run main.go
 ```
