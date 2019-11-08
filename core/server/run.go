@@ -24,10 +24,8 @@ func init() {
 
 // Serve Star server
 func Serve() {
-	conf := boot.LoadConfig()
-
 	// Regist service
-	rpc.Register(conf.Service.Name)
+	rpc.Register(os.Getenv("SERVICE"))
 }
 
 func usage(exitCode int, extraMessage ...interface{}) {

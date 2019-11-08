@@ -32,7 +32,9 @@ func LoadConfig() *scheme.Config {
 		service = spf
 	}
 	cf = "config/env/" + env + "/" + service + ".toml"
-	toml.DecodeFile(cf, &conf)
+	if _, err := toml.DecodeFile(cf, &conf); err != nil {
+		log.Fatalf("No default config file: '%s'", cf)
+	}
 
 	conf.ENV = env
 	return conf

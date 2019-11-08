@@ -4,7 +4,8 @@ package scheme
 type Config struct {
 	ENV     string
 	Service struct {
-		Name string `toml:"name"`
-		Env  string `toml:"env"`
+		Name        string `toml:"name"`
+		Env         string `toml:"env"`
+		Description string `toml:"description"`
 	} `toml:"service"`
 }

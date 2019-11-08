@@ -5,7 +5,18 @@ import (
 	"net"
 	"net/rpc"
 	"net/rpc/jsonrpc"
+
+	"rpc_server/core/boot"
 )
+
+func init() {
+	s := boot.LoadConfig().Service
+
+	ServiceRegisted[s.Name] = Service {
+		Name: s.Name,
+		Description: s.Description,
+	}
+}
 
 // Register 服務註冊
 func Register(name string) {
