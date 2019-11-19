@@ -6,6 +6,8 @@ import (
 	"strings"
 
 	"rpc_server/core/rpc"
+	"rpc_server/core/boot"
+	_ "rpc_server/service"
 )
 
 func init() {
@@ -22,8 +24,10 @@ func init() {
 
 // Serve Star server
 func Serve() {
+	conf := boot.LoadConfig()
+
 	// Regist service
-	rpc.Register(os.Getenv("SERVICE"))
+	rpc.Active(conf.Service.Name)
 }
 
 func usage(exitCode int, extraMessage ...interface{}) {

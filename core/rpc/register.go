@@ -7,10 +7,10 @@ import (
 	"net/rpc/jsonrpc"
 )
 
-// Register 服務註冊
-func Register(name string) {
+// Active Active Service
+func Active(name string) {
 	if service, ok := ServiceRegisted[name]; ok {
-		// 註冊服務
+		// Active from registed service
 		err := rpc.RegisterName(name, service.Instance)
 		if err != nil {
 			log.Println("[rpc_error]:", err.Error())
@@ -21,17 +21,28 @@ func Register(name string) {
 
 	log.Printf("Start service: %s; success", name)
 
-	// 建立監聽
+	// Star listen
 	l, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		log.Println("[rpc_error]:", err.Error())
 	}
 
-	// 啟動服務
+	// Active Service
 	for {
 		conn, _ := l.Accept()
 		defer conn.Close()
 
 		go jsonrpc.ServeConn(conn)
 	}
+}
+
+//Register Regist Services
+func Register(serviceName, description string, instance interface{}) error {
+	ServiceRegisted[serviceName] = Service{
+		Name:        serviceName,
+		Description: description,
+		Instance:    instance,
+	}
+
+	return nil
 }

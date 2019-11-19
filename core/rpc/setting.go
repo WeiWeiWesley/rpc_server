@@ -1,7 +1,5 @@
 package rpc
 
-import "rpc_server/service"
-
 // Service 微服務
 type Service struct {
 	Name        string      // 名稱
@@ -10,10 +8,4 @@ type Service struct {
 }
 
 // ServiceRegisted 註冊清單
-var ServiceRegisted = map[string]Service{
-	"Echo": Service{
-		Name:        "Echo",
-		Description: "測試服務",
-		Instance:    new(service.Echo),
-	},
-}
+var ServiceRegisted = map[string]Service{}
