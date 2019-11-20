@@ -6,14 +6,13 @@ import (
 	"strings"
 
 	"rpc_server/core/rpc"
-	"rpc_server/core/boot"
 	_ "rpc_server/service"
 )
 
 func init() {
 	// timezone
-	if os.Getenv("TZ") == "" {
-		os.Setenv("TZ", "Asia/Taipei")
+	if os.Getenv("TZ") != "" {
+		os.Setenv("TZ", os.Getenv("TZ"))
 	}
 
 	// check env
@@ -24,15 +23,13 @@ func init() {
 
 // Serve Star server
 func Serve() {
-	conf := boot.LoadConfig()
-
 	// Regist service
-	rpc.Active(conf.Service.Name)
+	rpc.Active(os.Getenv("SERVICE"))
 }
 
 func usage(exitCode int, extraMessage ...interface{}) {
 	builder := new(strings.Builder)
-	builder.WriteString("⚙  SERVICE : 服務清單")
+	builder.WriteString("*  SERVICE : Service List")
 	builder.WriteRune('\n')
 	srvName := "<none>"
 	whiteSpace := 0
@@ -55,18 +52,18 @@ func usage(exitCode int, extraMessage ...interface{}) {
 	}
 
 	fmt.Printf(`
-	可用環境變數：
+	Available ENV：
 
-	*  ENV : 運行環境
-		- docker           容器開發
-		- local            本機開發
-		- gcp-development  GCP開發站
-		- gcp-qatest       GCP測試站
-		- gcp-production   GCP正式站
+	*  ENV : Environment
+		- docker           Docker
+		- local            Local
+		- gcp-development  GCP Development
+		- gcp-qatest       GCP Quality Assurance Test
+		- gcp-pro          GCP Production
 
 	%s
 
-	範例： ENV=local SERVICE=%s go run main.go
+	Example： ENV=local SERVICE=%s go run main.go
 
 
 `, builder.String(), srvName)

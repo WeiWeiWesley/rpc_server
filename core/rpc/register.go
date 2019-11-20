@@ -9,17 +9,29 @@ import (
 
 // Active Active Service
 func Active(name string) {
-	if service, ok := ServiceRegisted[name]; ok {
-		// Active from registed service
-		err := rpc.RegisterName(name, service.Instance)
-		if err != nil {
-			log.Println("[rpc_error]:", err.Error())
+	if name == "All" {
+		// Active all registed services
+		for serviceName, service := range ServiceRegisted {
+			err := rpc.RegisterName(serviceName, service.Instance)
+			if err != nil {
+				log.Println("[rpc_error]:", err.Error())
+				continue
+			}
+			log.Printf("Start service: %s; success\n", serviceName)
 		}
 	} else {
-		log.Fatalf("[Fatal error] Service '%s' not exist", name)
+		// Active service by name
+		if service, ok := ServiceRegisted[name]; ok {
+			// Active from registed service
+			err := rpc.RegisterName(name, service.Instance)
+			if err != nil {
+				log.Println("[rpc_error]:", err.Error())
+			}
+		} else {
+			log.Fatalf("[Fatal error] Service '%s' not exist", name)
+		}
+		log.Printf("Start service: %s; success\n", name)
 	}
-
-	log.Printf("Start service: %s; success", name)
 
 	// Star listen
 	l, err := net.Listen("tcp", ":50051")

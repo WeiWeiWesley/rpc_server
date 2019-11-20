@@ -12,7 +12,7 @@ import (
 
 var conf *scheme.Config
 
-//LoadConfig 載入 config
+//LoadConfig Load config by env & service's name
 func LoadConfig() *scheme.Config {
 	if conf != nil {
 		return conf
@@ -21,13 +21,13 @@ func LoadConfig() *scheme.Config {
 	env := os.Getenv("ENV")
 	service := "default"
 
-	// 載入預設 config
+	// default config
 	cf := "config/env/" + env + "/" + service + ".toml"
 	if _, err := toml.DecodeFile(cf, &conf); err != nil {
 		log.Fatalf("No default config file: '%s'", cf)
 	}
 
-	// 載入特定 config
+	// service's config
 	if spf := strings.ToLower(os.Getenv("SERVICE")); len(spf) > 0 {
 		service = spf
 	}
