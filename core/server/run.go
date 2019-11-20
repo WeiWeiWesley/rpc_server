@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"rpc_server/core/rpc"
-	_ "rpc_server/service"
+	_ "rpc_server/service" //for register
 )
 
 func init() {
