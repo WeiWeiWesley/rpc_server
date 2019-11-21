@@ -12,7 +12,7 @@ func init() {
 type Echo struct{}
 
 //Ping Ping
-func (d *Echo) Ping(args *string, result *string) (rpcErr error) {
-	*result = "Pong"
+func (d *Echo) Ping(req *string, res *string) (rpcErr error) {
+	*res = "Pong"
 	return
 }

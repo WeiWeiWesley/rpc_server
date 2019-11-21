@@ -26,7 +26,7 @@ SERVICE=Echo ENV=local go run main.go
 
 ### Add Service
 
-You can add your service in service floder
+You can add your service in service folder
 
 ```
 rpc_server
@@ -74,9 +74,39 @@ func (d *Echo) Ping(args *string, result *string) (rpcErr error) {
 
 ```
 
+### Docker Compose Example
+
+Simulation multi services in local envrionment. Use docker-compose.
+
+```console
+docker-compose up
+```
+
+Add your services to docker-compose.yaml 
+```yaml
+version: '2'
+
+services:
+    echo:
+        build: .
+        hostname: echo
+        environment:
+            - ENV=local
+            - SERVICE=Echo
+            - TZ=Asia/Taipei
+
+    math:
+        build: .
+        hostname: math
+        environment:
+            - ENV=local
+            - SERVICE=Math
+            - TZ=Asia/Taipei
+```
+
 ### Run All Service At Once
 
-We used to run one service at one pod or one mechine in production envrinment. But if you want to start all at once, here is it.
+We used to run one service at one pod or one mechine in production envrionment. But if you want to start all at once, here is it.
 
 ```console
 SERVICE=All ENV=local go run main.go

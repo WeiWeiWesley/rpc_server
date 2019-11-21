@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+    echo:
+        build: .
+        hostname: echo
+        environment:
+            - ENV=local
+            - SERVICE=Echo
+            - TZ=Asia/Taipei
+
+    math:
+        build: .
+        hostname: math
+        environment:
+            - ENV=local
+            - SERVICE=Math
+            - TZ=Asia/Taipei
+
